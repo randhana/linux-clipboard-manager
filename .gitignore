@@ -1,0 +1,16 @@
+# Environments
+venv/
+.env
+
+# Python caching
+__pycache__/
+*.pyc
+
+# Distribution output
+dist/
+build/
+*.egg-info/
+linux_clipboard_manager.egg-info/
+
+# Databases
+*.db
