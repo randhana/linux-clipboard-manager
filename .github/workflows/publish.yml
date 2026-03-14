@@ -1,0 +1,34 @@
+name: Publish to PyPI
+
+# This says to only run this action when you create a new Release in GitHub
+on:
+  release:
+    types: [published]
+
+jobs:
+  pypi-publish:
+    name: Upload to PyPI
+    runs-on: ubuntu-latest
+    
+    permissions:
+      id-token: write
+      contents: read
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install Build Tools
+        run: pip install build twine
+
+      - name: Build the Package
+        run: python -m build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        
