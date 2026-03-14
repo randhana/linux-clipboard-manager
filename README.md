@@ -19,7 +19,7 @@ sudo apt install xdotool wtype
 ## Installation
 You can install the Clipboard Manager easily via `pip`:
 ```bash
-pip install linux-clipboard-manager
+pip install linux-copycache
 ```
 
 ### System Dependencies
