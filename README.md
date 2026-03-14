@@ -35,6 +35,27 @@ linux-copycache
 ```
 The application will launch, dock itself to your system tray, and quietly monitor your copied text!
 
+> **Note on PATH:** If you installed as a normal user, `pip` might place the executable in `~/.local/bin`. If your terminal says `command not found`, add this directory to your PATH:
+> `echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc`
+
+## Autostart on Boot (Ubuntu/Linux)
+To make the clipboard manager start automatically when you log in, create a `.desktop` file in your autostart folder.
+
+Run this command in your terminal:
+```bash
+mkdir -p ~/.config/autostart && cat << 'EOF' > ~/.config/autostart/linux-copycache.desktop
+[Desktop Entry]
+Type=Application
+Exec=linux-copycache
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=Linux CopyCache
+Comment=Linux Clipboard Manager
+EOF
+```
+*(If `linux-copycache` is not in your system PATH, replace `Exec=linux-copycache` with the full path, e.g., `Exec=/home/YOUR_USERNAME/.local/bin/linux-copycache`)*
+
 ## Setting up the `Super+V` (Win+V) Shortcut in Ubuntu
 For the native Windows experience, set up a custom shortcut:
 1. Open **Settings** -> **Keyboard**.
