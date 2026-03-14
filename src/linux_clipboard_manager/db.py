@@ -66,5 +66,12 @@ def delete_item(item_id: int):
     conn.commit()
     conn.close()
 
+def clear_all():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM clipboard_items')
+    conn.commit()
+    conn.close()
+
 if __name__ == '__main__':
     init_db()

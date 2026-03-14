@@ -3,8 +3,8 @@ import os
 import subprocess
 import time
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QListWidget, QListWidgetItem, QLabel,
-    QSystemTrayIcon, QMenu
+    QApplication, QWidget, QVBoxLayout, QHBoxLayout, QListWidget, 
+    QListWidgetItem, QLabel, QSystemTrayIcon, QMenu, QPushButton, QMessageBox
 )
 from PyQt6.QtCore import Qt, pyqtSignal, QTimer
 from PyQt6.QtGui import QFont, QKeyEvent, QIcon, QClipboard
@@ -38,21 +38,39 @@ class ClipboardGUI(QWidget):
             Qt.WindowType.Tool
         )
         self.resize(400, 500)
+        self.setObjectName("MainWindow")
         self.setStyleSheet("""
-            QWidget {
+            #MainWindow {
                 background-color: #1e1e2e;
                 color: #cdd6f4;
                 border: 1px solid #45475a;
                 border-radius: 8px;
             }
-            QLabel {
-                padding: 10px;
-                font-weight: bold;
-                font-size: 14px;
+            #Header {
                 background-color: #313244;
                 border-bottom: 1px solid #45475a;
                 border-top-left-radius: 8px;
                 border-top-right-radius: 8px;
+            }
+            #Header QLabel {
+                padding: 10px;
+                font-weight: bold;
+                font-size: 14px;
+                border: none;
+                color: #cdd6f4;
+            }
+            QPushButton {
+                background-color: transparent;
+                color: #a6adc8;
+                border: 1px solid #45475a;
+                border-radius: 4px;
+                padding: 5px 10px;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            QPushButton:hover {
+                background-color: #45475a;
+                color: #cdd6f4;
             }
             QListWidget {
                 border: none;
@@ -74,8 +92,23 @@ class ClipboardGUI(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
 
+        # Header section with title and clear button
+        header_widget = QWidget()
+        header_widget.setObjectName("Header")
+        header_layout = QHBoxLayout(header_widget)
+        header_layout.setContentsMargins(0, 0, 0, 0)
+        
         title = QLabel("Clipboard History")
-        layout.addWidget(title)
+        header_layout.addWidget(title)
+        
+        header_layout.addStretch()
+        
+        self.clear_btn = QPushButton("Clear")
+        self.clear_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.clear_btn.clicked.connect(self.on_clear_clicked)
+        header_layout.addWidget(self.clear_btn)
+        
+        layout.addWidget(header_widget)
 
         self.list_widget = QListWidget()
         font = QFont("Sans Serif", 11)
@@ -105,8 +138,6 @@ class ClipboardGUI(QWidget):
             # Update clipboard silently
             clipboard = QApplication.clipboard()
             clipboard.setText(content, QClipboard.Mode.Clipboard)
-            if clipboard.supportsSelection():
-                clipboard.setText(content, QClipboard.Mode.Selection)
             
             import pyperclip
             try:
@@ -169,6 +200,11 @@ class ClipboardGUI(QWidget):
 
     def on_item_clicked(self, item):
         self.perform_paste(item)
+
+    def on_clear_clicked(self):
+        db.clear_all()
+        self.list_widget.clear()
+        self.internal_clipboard_update_text = None
 
     def keyPressEvent(self, event: QKeyEvent):
         self.reset_hide_timer()
