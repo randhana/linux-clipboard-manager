@@ -23,15 +23,15 @@ pip install linux-copycache
 ```
 
 ### System Dependencies
-The auto-pasting functionality requires `xdotool` and `xclip` to be installed on your system.
+The auto-pasting functionality requires `xdotool` and `xclip` to be installed on your system. The GUI requires `libxcb-cursor0`.
 ```bash
-sudo apt install xdotool xclip
+sudo apt install xdotool xclip libxcb-cursor0
 ```
 
 ## Running the tool
 Once installed, you can start the application from anywhere in your terminal:
 ```bash
-linux-clipboard
+linux-copycache
 ```
 The application will launch, dock itself to your system tray, and quietly monitor your copied text!
 
@@ -41,7 +41,7 @@ For the native Windows experience, set up a custom shortcut:
 2. Scroll to the bottom and click **View and Customize Shortcuts**.
 3. Select **Custom Shortcuts** and click the **+** or **Add Shortcut** button.
 4. **Name:** `Clipboard Manager`
-5. **Command:** `linux-clipboard`
+5. **Command:** `linux-copycache`
 6. **Shortcut:** Press `Super + V` (Windows key + V).
 7. Click **Add**.
 
