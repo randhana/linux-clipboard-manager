@@ -2,6 +2,7 @@
 
 A lightweight, local-only clipboard manager for Linux built with Python and PyQt6.
 
+![Linux CopyCache GUI](images/copycache_gui.png)
 ## Features
 - Background daemon to monitor clipboard history.
 - Popup GUI to browse and search previous items.
